@@ -1,0 +1,11 @@
+/.cache/
+/build/
+/dist/
+/.private/
+**/__pycache__/
+*.pyc
+*.p12
+*.jks
+*.keystore
+local.properties
+.DS_Store

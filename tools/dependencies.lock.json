@@ -1,0 +1,57 @@
+[
+  {
+    "file": "baidu-location-9.7.0.aar",
+    "url": "https://repo.maven.apache.org/maven2/com/baidu/lbsyun/BaiduMapSDK_Location/9.7.0/BaiduMapSDK_Location-9.7.0.aar",
+    "verified_algorithm": "sha1",
+    "expected": "5ebb8d58fa1644783a37f3d9d493ece865d7132d",
+    "sha256": "5544b7e0f74ac66fa49015e51a6d3289528223a9fb28f3cd0cf1e49b9d1a5238"
+  },
+  {
+    "file": "common-1.0.43.aar",
+    "url": "https://repo.maven.apache.org/maven2/com/baidu/lbsyun/common/1.0.43/common-1.0.43.aar",
+    "verified_algorithm": "sha1",
+    "expected": "7078ac37ca17b903ad6c172bfd51018a297a5ea8",
+    "sha256": "8a44709a0854a5310ec3d88167b5aa72bf568a32e8f3264825c8566aa2bc4e2e"
+  },
+  {
+    "file": "protobuf-1.0.7.aar",
+    "url": "https://repo.maven.apache.org/maven2/com/baidu/lbsyun/protobuf/1.0.7/protobuf-1.0.7.aar",
+    "verified_algorithm": "sha1",
+    "expected": "33682d7c67440c536b97d7a7956917b7a35b91f7",
+    "sha256": "b4744173ddf8a58a8dab3a787f865c6f8c3f2a8ca742b8fc485638042679b272"
+  },
+  {
+    "file": "okhttp-4.12.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar",
+    "verified_algorithm": "sha1",
+    "expected": "2f4525d4a200e97e1b87449c2cd9bd2e25b7e8cd",
+    "sha256": "b1050081b14bb7a3a7e55a4d3ef01b5dcfabc453b4573a4fc019767191d5f4e0"
+  },
+  {
+    "file": "okio-jvm-3.6.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar",
+    "verified_algorithm": "sha1",
+    "expected": "5600569133b7bdefe1daf9ec7f4abeb6d13e1786",
+    "sha256": "67543f0736fc422ae927ed0e504b98bc5e269fda0d3500579337cb713da28412"
+  },
+  {
+    "file": "kotlin-stdlib-1.9.10.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlin/kotlin-stdlib/1.9.10/kotlin-stdlib-1.9.10.jar",
+    "verified_algorithm": "sha1",
+    "expected": "72812e8a368917ab5c0a5081b56915ffdfec93b7",
+    "sha256": "55e989c512b80907799f854309f3bc7782c5b3d13932442d0379d5c472711504"
+  },
+  {
+    "file": "annotations-13.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar",
+    "verified_algorithm": "sha1",
+    "expected": "919f0dfe192fb4e063e7dacadee7f8bb9a2672a9",
+    "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+  },
+  {
+    "file": "libxposed-api-102.0.0.aar",
+    "url": "https://github.com/libxposed/api/releases/download/102.0.0/api-102.0.0.aar",
+    "sha256": "423484a6e1807e7a423c4b88fcd8176d104318259d91791877fed88fe91479d0",
+    "compile_only": true
+  }
+]
