@@ -15,8 +15,72 @@
 
 1. 阅读[兼容范围](docs/COMPATIBILITY.zh-CN.md)，核对手机、系统、GMS 和 Vector。
 2. 从对应 Release 下载 APK 和同名 `.apk.json` 校验文件。
-3. 按[详细安装使用说明](docs/INSTALLATION.zh-CN.md)完成检查、安装、填写 AK、启用作用域和重启验证。
+3. 按下文[申请百度 AK](#申请百度-ak)，再按[详细安装使用说明](docs/INSTALLATION.zh-CN.md)完成检查、安装、填写 AK、启用作用域和重启验证。
 4. 日常无需反复打开桥接；由系统定位请求驱动。Google 天气的数据请求仍需正常访问 Google 服务。
+
+## 申请百度 AK
+
+每位使用者在自己的百度账号下申请 **Android 定位 SDK 的 AK**，再填入桥接应用。使用本仓库已签名的 Release APK 时，无需安装 Android Studio、编译代码或上传签名私钥。
+
+### 1. 登录并创建 Android 应用
+
+1. 打开[百度地图开放平台控制台](https://lbsyun.baidu.com/apiconsole/key)，注册或登录自己的百度账号。
+2. 首次使用时，按控制台提示完成开发者注册及个人/企业认证。参考官方[使用准备](https://lbsyun.baidu.com/docs/guide?title=android-guide/prepare)。
+3. 进入“应用管理 → 我的应用”，点击“创建应用”。
+4. 按下表填写。控制台不同页面可能将 Android 类型显示为“Android 应用”或“Android SDK”，选择 Android 客户端对应项。
+
+| 字段 | 填写内容 |
+| --- | --- |
+| 应用名称 | 自行命名，例如 `location_bridge`，便于在控制台管理 |
+| 应用类型 | **Android 应用 / Android SDK** |
+| 启用服务 | 确保勾选 **Android 定位 SDK**；本桥接不需要额外启用地图渲染、导航或百度天气查询 |
+| PackageName / 包名 | `io.github.lichen.locationbridge` |
+| 发布版 SHA1 | 复制下方的 Release 签名 SHA1 |
+| 开发版 SHA1 | 使用本仓库同一个已签名 APK 测试时，填写相同的 SHA1 |
+
+### 2. 复制包名和签名 SHA1
+
+**包名：**
+
+```text
+io.github.lichen.locationbridge
+```
+
+**本仓库当前两个 Release APK 的签名证书 SHA1：**
+
+```text
+0D:1D:3F:FE:3E:FC:ED:4E:95:3A:4A:A7:76:41:83:26:80:62:88:33
+```
+
+Pixel 与 Q25 两个发布包的包名和签名相同，这两项填写信息相同。这里的 SHA1 是**桥接 APK 的签名证书指纹**；不要填手机序列号、系统指纹、APK 文件的 SHA256，也不要填 Google 地图或 GMS 的包名。
+
+如果控制台显示自动生成的“安全码”，核对其内容为以下 `SHA1;包名` 组合，中间是英文分号：
+
+```text
+0D:1D:3F:FE:3E:FC:ED:4E:95:3A:4A:A7:76:41:83:26:80:62:88:33;io.github.lichen.locationbridge
+```
+
+**自行构建或重新签名的 APK 必须使用实际签名证书的 SHA1**，不能直接沿用上面的值。可查看构建生成的 `.apk.signature.txt` 中 `certificate SHA-1 digest`，或者使用 Android SDK Build-Tools 的 `apksigner verify --print-certs` 检查 APK。参考[源码构建说明](docs/BUILDING.zh-CN.md)。
+
+### 3. 提交申请并填入桥接
+
+1. 核对应用类型、定位服务、包名及 SHA1，按页面要求阅读服务条款并提交。
+2. 返回“我的应用”，找到刚创建的应用，复制其 **AK / 访问应用（AK）**。不要把应用编号、证书 SHA1 或上面的安全码当作 AK。参考官方[注册和获取密钥](https://lbs.baidu.com/docs/guide?title=android-guide/create-project/ak)。
+3. 按[安装说明](docs/INSTALLATION.zh-CN.md)安装对应版本，在手机上打开“定位桥接”或“定位桥接 Q25”，将 AK 粘贴进输入框。本公开版要求 AK 为 32 位英文字母或数字。
+4. 阅读并勾选定位数据处理授权，点击“保存 AK 和使用授权”。AK 保存在桥接应用的私有设置中，不需要写入源码或重新打包 APK。
+5. 确认系统定位与定位权限已开启、网络正常，点击“开始两分钟室内测试”。取得新的网络位置后，再按安装说明完成 Vector 作用域、重启及地图/天气验证。**保存成功只代表本地保存完成，不代表百度鉴权已经通过。**
+
+### 申请或鉴权遇到问题
+
+| 情况 | 处理方法 |
+| --- | --- |
+| 已有 AK，但类型为浏览器或服务端 | 为本桥接另建 Android 类型的 AK |
+| 鉴权失败或没有定位服务权限 | 在控制台打开该应用的设置，核对 Android 定位 SDK 已启用、包名及实际 APK 签名 SHA1 一致 |
+| 重新签名后原 AK 失效 | 用新证书的 SHA1 更新对应申请信息；开发和发布使用不同签名时分别填写 |
+| 想在 Google 天气或 KWGT 中使用 | AK 填在桥接应用内；它负责位置来源，天气内容仍由各应用自己的天气提供商获取 |
+| 额度不足或控制台要求额外开通 | 按自己的账号、使用场景和控制台当前规则处理，本项目不承诺固定免费额度 |
+
+请保管自己的 AK，不要贴到公开 issue、README、截图或日志中。完整的平台申请说明见[官方定位 SDK 密钥文档](https://lbsyun.baidu.com/index.php?title=模板:Android定位SDK注册和获取密钥)。
 
 ## 测试范围
 

@@ -36,6 +36,8 @@ python3 tools/install.py --serial SERIAL --variant q25-android14 --check
 
 ## 三、准备自己的百度 AK
 
+首次申请请先阅读 README 中的[完整 AK 申请流程](../README.md#申请百度-ak)，包含控制台入口、各字段填写方法及鉴权排查。
+
 在[百度地图开放平台](https://lbsyun.baidu.com/)创建 **Android 应用**，启用 **Android 定位 SDK**。不需要为此桥接勾选导航、地图渲染等所有产品。
 
 - PackageName：`io.github.lichen.locationbridge`。
