@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "checks": [
+    "old: reviewed class fingerprints match",
+    "new: reviewed class fingerprints match",
+    "unrelated APK resources/metadata: accepted",
+    "referenced string changed without changing instruction indices: rejected",
+    "missing helper/receiver classes: rejected"
+  ],
+  "scope": "host only; modified copies never installed"
+}

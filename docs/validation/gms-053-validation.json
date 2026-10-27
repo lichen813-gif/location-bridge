@@ -1,0 +1,80 @@
+{
+  "test_time_local": "2026-10-27T19:42:20.655641+08:00",
+  "result": "PASS",
+  "bridge_version": "0.5.3-gms-core-contract",
+  "bridge_version_code": 9,
+  "gms_version": "26.42.31",
+  "gms_version_code": 264231035,
+  "gms_update_local": "2026-10-27T06:40:13+08:00",
+  "gms_apk_sha256": "04ef400a85137c68f3eec8113f1a3bdb81f63561db9514298c1e9bbf0ec40ae8",
+  "interface_review": {
+    "helper": "dsyl -> dtxr",
+    "receiver": "dsyj -> dtxp",
+    "dispatcher": "hrgx -> huct",
+    "engine": "hpel -> hsal",
+    "format_selector": "kakb.p -> kdco.o",
+    "callback_branch": "kafo.g -> hsal.x (two runtime flags)",
+    "request_stop_message_report_contract": "preserved",
+    "public_api_breaking_change": "not observed; these are private implementation changes"
+  },
+  "pixel_weather": {
+    "result": "PASS",
+    "independent_current_location_request": true,
+    "maps_not_opened_to_seed_this_request": true,
+    "accuracy_m": 45.0,
+    "fresh_observation_age_seconds": 0.071,
+    "weather_and_address_refresh": "PASS",
+    "current_location_card_visible": true,
+    "delivery": [
+      "10-27 19:38:46.069: delivered locations[1] to 10174/com.google.android.apps.weather/6bbaca00"
+    ],
+    "after_gms_background_restart_last_location_age_seconds": 19.81
+  },
+  "maps": {
+    "result": "PASS",
+    "continuous_fresh_deliveries": [
+      "10-27 19:38:59.270: delivered locations[1] to 10240/com.google.android.apps.maps/233da571",
+      "10-27 19:38:59.399: delivered locations[1] to 10240/com.google.android.apps.maps/233da571",
+      "10-27 19:39:11.139: delivered locations[1] to 10240/com.google.android.apps.maps/233da571",
+      "10-27 19:39:20.958: delivered locations[1] to 10240/com.google.android.apps.maps/233da571"
+    ],
+    "minimum_continuous_test_span_seconds": 21,
+    "accuracy_m": 45.0
+  },
+  "kwgt": {
+    "result": "PASS",
+    "gms_delivery": [
+      "10-27 19:38:49.802: delivered locations[1] to 10341/org.kustom.widget/31786e2"
+    ],
+    "automatic_location": true,
+    "accuracy_m": 45.0,
+    "position_time_local": "2026-10-27T19:38:49.814000+08:00",
+    "weather_refresh": "PASS",
+    "weather_source": "OWM",
+    "weather_update_local": "2026-10-27T19:40:26.715000+08:00"
+  },
+  "background_recovery": {
+    "result": "PASS",
+    "method": "Home screen, terminate only user-0 main GMS location process; no client opened before automatic real fix",
+    "hook_ready": true,
+    "new_real_observation_queued": true,
+    "original_callback_returned": true,
+    "weather_cold_launch_afterwards": "PASS"
+  },
+  "compatibility_guard": {
+    "scope": "six reviewed location classes, declarations, method code and direct reference symbols, plus reflection layout and report roundtrip",
+    "whole_apk_hash_required": false,
+    "unrelated_resource_change_test": "PASS",
+    "referenced_symbol_change_rejected": "PASS",
+    "missing_core_class_rejected": "PASS",
+    "limits": "Conservative refusal on obfuscation or constant-pool renumbering; no guarantee for arbitrary future versions, runtime flags or untracked transitive changes"
+  },
+  "input_policy_tests": "PASS: 11 cases; no position published",
+  "scope_unchanged": true,
+  "cleared_app_data": false,
+  "gms_apk_modified": false,
+  "gms_auto_update_disabled": false,
+  "gps_provider_replaced": false,
+  "whole_phone_reboot_this_version": "NOT_TESTED",
+  "backup_apk": ".private/previous-0.5.2-before-gms-update.apk"
+}

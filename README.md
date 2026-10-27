@@ -11,6 +11,12 @@
 
 **公开 APK 不内置任何开发者的百度 AK。** 安装后需要自己申请 Android 定位 AK，在应用内保存并同意定位数据处理。两套 APK 都是 ARM64，包名相同 `io.github.lichen.locationbridge`，应按设备选用。
 
+## 最新源码：Pixel 0.5.4-public
+
+已适配 GMS **26.42.31 / 264231035**，保留 26.41.63 布局。2026-10-27 在 Pixel 上验证天气独立获取室内位置、Maps 连续定位及 KWGT 自动位置/天气刷新通过。整包 SHA256 限制已改为已核验的定位核心类指纹与运行时结构检查，无关资源更新且核心校验通过时可继续工作。
+
+此处是源码更新；上表的既有 Pixel Release 0.5.3-public 不支持新版 GMS。可按[构建说明](docs/BUILDING.zh-CN.md)构建 0.5.4-public。公开版构建与原机私用版的验证范围分别记录在[测试文档](docs/VALIDATION.zh-CN.md)。
+
 ## 开始使用
 
 1. 阅读[兼容范围](docs/COMPATIBILITY.zh-CN.md)，核对手机、系统、GMS 和 Vector。

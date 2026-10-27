@@ -14,7 +14,7 @@
    cd location-bridge
    ```
 
-5. 从对应 Release 下载 APK、同名 `.apk.json` 和 `SHA256SUMS`。下面所有命令都在仓库目录内运行，APK 路径按实际下载位置填写。
+5. 从对应 Release 下载 APK、同名 `.apk.json` 和 `SHA256SUMS`。Pixel 的 GMS 26.42.31 需要 0.5.4-public；该版本目前为源码更新，需按构建文档生成 APK，既有 0.5.3-public Release 不兼容。下面所有命令都在仓库目录内运行，APK 路径按实际下载位置填写。
 
 ## 二、只读核对兼容性
 
@@ -55,7 +55,7 @@ python3 tools/install.py --serial SERIAL --variant q25-android14 --check
 Pixel：
 
 ```sh
-python3 tools/install.py --serial SERIAL --variant pixel-android17 --apk /实际路径/location-bridge-pixel-android17-0.5.3-public.apk
+python3 tools/install.py --serial SERIAL --variant pixel-android17 --apk /实际路径/location-bridge-pixel-android17-0.5.4-public.apk
 ```
 
 Q25：
@@ -149,7 +149,7 @@ adb -s SERIAL shell su -c 'sh /data/local/tmp/location-bridge-rollback.sh'
 | 百度鉴权失败 | 核对 Android 类型 AK、包名、实际 APK 的证书 SHA1，以及定位服务权限/额度 |
 | 独立测试有位置，其他应用没有 | 核对 Vector API、系统/GMS 指纹、两个作用域和重启后的绑定状态 |
 | 位置正确，天气不更新 | 分别检查天气提供商、Google 服务联网/代理和应用自身刷新状态 |
-| GMS 更新后失效 | 版本指纹保护可能已拒绝适配；先检查，不能仅修改版本号跳过验证 |
+| GMS 更新后失效 | 核心代码/结构保护（Pixel）或整包指纹保护（Q25）可能已拒绝适配；先检查，不能仅修改版本号跳过验证 |
 | 待机后 SDK 不运行 | 检查本应用后台权限和电池豁免；不要关闭整个系统省电机制 |
 
 反馈问题时提供型号、系统 Build、GMS/Vector 版本及不含坐标的状态页即可。不要上传全量定位转储、账户数据库、AK、签名私钥或未经检查的截图。

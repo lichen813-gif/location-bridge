@@ -10,16 +10,13 @@ import android.os.*;
 import android.provider.Settings;
 import android.util.Log;
 import io.github.libxposed.api.XposedInterface;
-import java.io.FileInputStream;
 import java.lang.reflect.*;
-import java.security.MessageDigest;
 import java.util.*;
 
-/** Version-pinned supplemental real network observations for the stock GMS NLP callback. */
+/** Reviewed-core supplemental real network observations for the stock GMS NLP callback. */
 final class GmsNlpBridge {
     static final String SWITCH="lichen_location_bridge_gms_enabled";
     private static final String TAG="GmsLocationBridge";
-    private static final String APK_SHA256="3d281d7ec8467cb94b33ba350a25b2dfbb92f3918a2dbfca8925e496dc75abde";
     private final XposedInterface api;
     private final Map<Object,Session> sessions=new IdentityHashMap<>();
     private Field contextField,dispatcherField,callbackField,handlerField,receiverOwnerField,engineRunningField;
@@ -31,11 +28,11 @@ final class GmsNlpBridge {
 
     void install(ClassLoader loader,String apk) {
         try {
-            if(!APK_SHA256.equals(hash(apk))) { log("UNSUPPORTED_APK; original GMS retained");return; }
-            Class<?> helper=Class.forName("dsyl",false,loader);
-            Class<?> dispatcher=Class.forName("hrgx",false,loader);
-            Class<?> receiver=Class.forName("dsyj",false,loader);
-            engineClass=Class.forName("hpel",false,loader);
+            GmsCompatibility.Profile profile=GmsCompatibility.verify(apk,loader);
+            Class<?> helper=Class.forName(profile.helper(),false,loader);
+            Class<?> dispatcher=Class.forName(profile.dispatcher(),false,loader);
+            Class<?> receiver=Class.forName(profile.receiver(),false,loader);
+            engineClass=Class.forName(profile.engine(),false,loader);
             reportClass=Class.forName("com.google.android.location.internal.server.NlpReport",false,loader);
             Class<?> wifiScan=Class.forName("com.google.android.gms.location.WifiScan",false,loader);
             contextField=field(helper,"h",Context.class);
@@ -48,12 +45,21 @@ final class GmsNlpBridge {
             reportLocation=reportClass.getDeclaredMethod("a");
             if(reportLocation.getReturnType()!=Location.class)throw new NoSuchMethodException("report result");
             reportConstructor=reportClass.getDeclaredConstructor(Location.class,Location.class,int.class,wifiScan,byte[].class);
-            modernReports=Class.forName("kakb",false,loader).getDeclaredMethod("p");
+            modernReports=Class.forName(profile.selector(),false,loader).getDeclaredMethod(profile.flag());
             if(modernReports.getReturnType()!=boolean.class||!Modifier.isStatic(modernReports.getModifiers()))
                 throw new NoSuchMethodException("report selector");
             Method request=helper.getDeclaredMethod("a",long.class,long.class);
             Method stop=helper.getDeclaredMethod("b");
             Method delivery=receiver.getDeclaredMethod("handleMessage",Message.class);
+            if(request.getReturnType()!=void.class||stop.getReturnType()!=void.class
+                    ||delivery.getReturnType()!=void.class||enqueue.getReturnType()!=void.class
+                    ||!Handler.class.isAssignableFrom(receiver)
+                    ||!callbackField.getType().isAssignableFrom(engineClass))
+                throw new NoSuchMethodException("NLP layout");
+            // Verify the exact report constructor/accessor used below before installing any hooks.
+            Location check=new Location("network");
+            Object report=reportConstructor.newInstance(check,null,1,null,null);
+            if(reportLocation.invoke(report)!=check)throw new IllegalStateException("NLP report contract");
             api.hook(request).setId("baidu-real-network-gms-demand").setExceptionMode(XposedInterface.ExceptionMode.PROTECTIVE)
                     .intercept(chain->{
                 Object result=chain.proceed();
@@ -79,7 +85,7 @@ final class GmsNlpBridge {
                 } catch(Exception|LinkageError e){failure("CALLBACK_OBSERVATION",e);}
                 return result;
             });
-            log("HOOKS_READY; GMS=264163035; original requests and GPS retained");
+            log("HOOKS_READY; reviewed_core="+profile.version()+"; original requests and GPS retained");
         } catch(Exception|LinkageError e) { failure("INSTALL_UNAVAILABLE",e); }
     }
 
@@ -223,12 +229,6 @@ final class GmsNlpBridge {
         long age=SystemClock.elapsedRealtimeNanos()-l.getElapsedRealtimeNanos();
         long wall=System.currentTimeMillis()-l.getTime();
         return l.getElapsedRealtimeNanos()>0&&age>=0&&age<=30_000_000_000L&&wall>=-5000&&wall<=30_000;
-    }
-    private static String hash(String file) throws Exception {
-        MessageDigest digest=MessageDigest.getInstance("SHA-256");byte[] data=new byte[65536];
-        try(FileInputStream in=new FileInputStream(file)){int n;while((n=in.read(data))!=-1)digest.update(data,0,n);}
-        StringBuilder out=new StringBuilder();for(byte b:digest.digest())out.append(String.format(Locale.ROOT,"%02x",b&255));
-        return out.toString();
     }
     private void log(String s){api.log(Log.INFO,TAG,s);}
     private void failure(String stage,Throwable e) {

@@ -12,7 +12,8 @@
 
 - 设备：Pixel 10 Pro XL，`ro.product.device=mustang`。
 - Android 17 / API 37，Build `CP3A.261005.005`。
-- GMS `26.41.63 (260400-1003390101)` / versionCode `264163035`。
+- 最新源码 Pixel 0.5.4-public：GMS `26.42.31` / `264231035`，保留 `26.41.63` / `264163035` 布局。既有 Release 0.5.3-public 仅支持旧 GMS。
+- 新版 GMS base APK SHA256：`04ef400a85137c68f3eec8113f1a3bdb81f63561db9514298c1e9bbf0ec40ae8`。
 - GMS base APK SHA256：
   `3d281d7ec8467cb94b33ba350a25b2dfbb92f3918a2dbfca8925e496dc75abde`。
 - 原本机验证框架为 Vector 2.2 / API 102。
@@ -27,7 +28,9 @@
 - GMS base APK SHA256：
   `489ae6b16a2dc4aa69ecbaab3a8f1e3735247a6fe91b92ba270b6c30d7a02820`。
 
-GMS 版本名称相同也可能是不同 APK 变体，最终以 SHA256 为准。系统与 GMS 会在加载时检查；不支持的 GMS 不安装内部适配。安装脚本遇到不同指纹会拒绝继续，不能仅改数字绕过。
+Q25 仍采用整包 SHA256 校验。Pixel 最新源码改为六个已审阅定位核心类的声明、方法字节码和直接引用符号校验，并验证反射布局及 NlpReport 构造/读取契约。仅其他 APK 资源或无关部分变化且核心指纹不变时可继续；未知核心代码、混淆映射及常量池重排仍可能保守拒绝。静态指纹不能保证所有传递依赖及服务端开关兼容，不能仅凭方法签名不变推断未来版本可用。
+
+安装脚本仍保守地只接受明确核验过的整包指纹（Pixel 两版、Q25 一版）。运行时兼容性保护与安装器白名单范围不同；不支持的 GMS 不安装内部 hooks，系统 network 桥接独立保留。
 
 ## 不在当前验证范围内
 
