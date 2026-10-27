@@ -6,16 +6,16 @@
 
 | 下载版本 | 目标手机与系统 | GMS 版本 | 对应工程 |
 | --- | --- | --- | --- |
-| [Pixel Android 17 · 0.5.3-public](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.3-public) | Pixel 10 Pro XL / mustang，Android 17 `CP3A.261005.005` | `26.41.63` / `264163035`，指定 APK 指纹 | [pixel-android17](variants/pixel-android17) |
+| [Pixel Android 17 · 0.5.4-public](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.4-public) | Pixel 10 Pro XL / mustang，Android 17 `CP3A.261005.005` | `26.42.31` / `264231035`，保留 `26.41.63` 布局，核心代码校验 | [pixel-android17](variants/pixel-android17) |
 | [Q25 Android 14 · 0.6.1-public](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.6.1-public) | Zinwa Q25 / Xelex Q25，Android 14 `UP1A.231005.007`，指定系统指纹 | `26.40.32` / `264032029`，指定 APK 指纹 | [q25-android14](variants/q25-android14) |
 
 **公开 APK 不内置任何开发者的百度 AK。** 安装后需要自己申请 Android 定位 AK，在应用内保存并同意定位数据处理。两套 APK 都是 ARM64，包名相同 `io.github.lichen.locationbridge`，应按设备选用。
 
-## 最新源码：Pixel 0.5.4-public
+## 最新版本：Pixel 0.5.4-public
 
 已适配 GMS **26.42.31 / 264231035**，保留 26.41.63 布局。2026-10-27 在 Pixel 上验证天气独立获取室内位置、Maps 连续定位及 KWGT 自动位置/天气刷新通过。整包 SHA256 限制已改为已核验的定位核心类指纹与运行时结构检查，无关资源更新且核心校验通过时可继续工作。
 
-此处是源码更新；上表的既有 Pixel Release 0.5.3-public 不支持新版 GMS。可按[构建说明](docs/BUILDING.zh-CN.md)构建 0.5.4-public。公开版构建与原机私用版的验证范围分别记录在[测试文档](docs/VALIDATION.zh-CN.md)。
+[下载 Pixel 0.5.4-public APK 及校验文件](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.4-public)。旧版 0.5.3-public 不支持新版 GMS，也可按[构建说明](docs/BUILDING.zh-CN.md)自行构建。公开版构建与原机私用版的验证范围分别记录在[测试文档](docs/VALIDATION.zh-CN.md)。
 
 ## 开始使用
 

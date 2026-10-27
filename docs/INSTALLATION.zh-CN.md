@@ -14,7 +14,7 @@
    cd location-bridge
    ```
 
-5. 从对应 Release 下载 APK、同名 `.apk.json` 和 `SHA256SUMS`。Pixel 的 GMS 26.42.31 需要 0.5.4-public；该版本目前为源码更新，需按构建文档生成 APK，既有 0.5.3-public Release 不兼容。下面所有命令都在仓库目录内运行，APK 路径按实际下载位置填写。
+5. 从对应 Release 下载 APK、同名 `.apk.json` 和 `SHA256SUMS`。Pixel 的 GMS 26.42.31 需要 0.5.4-public；可从 [v0.5.4-public Release](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.4-public) 下载，既有 0.5.3-public Release 不兼容。下面所有命令都在仓库目录内运行，APK 路径按实际下载位置填写。
 
 ## 二、只读核对兼容性
 
