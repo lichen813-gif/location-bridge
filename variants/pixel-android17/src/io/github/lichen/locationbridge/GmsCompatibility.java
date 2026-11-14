@@ -20,7 +20,14 @@ final class GmsCompatibility {
                 "dtxr", "fb2c54e8b0e280e856d7507c98c0ac902ae4a1dfe3c030f9e6093e6bc561104f",
                 "hsal", "e9d499e3ce1fc6f54c8a78cb6e149a227e807a8e6cb7a85bbf889409bdd46d70",
                 "huct", "b1523abe27137f45b7ba2106659ec85327227de819423f740ac3071e2f2444e2",
-                "kdco", "11398ddb16e039ecb6e793780618a7fdd1f0b46a0a0cf4059e9f7ceffe644cac"))
+                "kdco", "11398ddb16e039ecb6e793780618a7fdd1f0b46a0a0cf4059e9f7ceffe644cac")),
+        new Profile("26.45.31", "dwyd", "hxwj", "dwyb", "hvyu", "", "", Map.of(
+                "com.google.android.location.internal.server.NlpReport", "cdc81b2be04e45c88fd1af50be4a70862e03d2153b552bc3f086e12a21f3287d",
+                "dwyb", "e8b57aea66ee890305520f6954ec73febfebddd01781bd3c745d1cfea1d9cee3",
+                "dwyd", "f31c27f141ec9c5387e8a0b07b8f02e91d29d5f1a43b1023880e48e28d705ffa",
+                "hvyu", "0006abbb3fbf3c2f3ab8df19eb87a646abaab5cddc23ceb1a4b9c8e57f460a15",
+                "hxwj", "29446c2267089c1b51f98a0b34228e84442c6aea2f7fbd6e0443fcabc906fafb",
+                "kgsh", "52a73fb247f9e2c360b7d049d325d9ad32dab536d42b7511347d195ab2f9dda1"))
     };
     static Profile verify(String apk,ClassLoader loader) throws Exception {
         for(Profile p:PROFILES) {

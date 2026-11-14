@@ -15,7 +15,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 VARIANTS = {
-    "pixel-android17": {"min_api": 37, "dex_api": 36, "version": "0.5.4-public", "code": 12},
+    "pixel-android17": {"min_api": 37, "dex_api": 36, "version": "0.5.6-public", "code": 14},
     "q25-android14": {"min_api": 34, "dex_api": 34, "version": "0.6.1-public", "code": 11},
 }
 
@@ -77,30 +77,49 @@ def main():
         api = build/"libxposed-api.jar"
         jars = []
         native = {}
+        library_resources=[]
+        resource_packages=[]
         for dependency in dependencies:
+            if dependency.get("variant",variant)!=variant or variant in dependency.get("exclude_variants",[]): continue
             path = cache/dependency["file"]
             if dependency.get("compile_only"):
                 with zipfile.ZipFile(path) as archive: api.write_bytes(archive.read("classes.jar"))
                 continue
             if path.suffix == ".jar": jars.append(path); continue
             with zipfile.ZipFile(path) as archive:
+                if dependency.get("variant"):
+                    import xml.etree.ElementTree as ET
+                    manifest=ET.fromstring(archive.read("AndroidManifest.xml"))
+                    resource_packages.append(manifest.attrib["package"])
+                    resdir=build/"library-resources"/path.stem
+                    for entry in archive.namelist():
+                        if entry.startswith("res/") and not entry.endswith("/"):
+                            dest=resdir/entry[4:];dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(archive.read(entry))
+                    if resdir.exists():library_resources.append(resdir)
                 for name in archive.namelist():
                     if name.endswith(".jar"):
                         dest=build/(path.stem+"-"+Path(name).name)
                         dest.write_bytes(archive.read(name));jars.append(dest)
                     if name.startswith("jni/arm64-v8a/") and name.endswith(".so"):
                         native["lib/arm64-v8a/"+Path(name).name]=archive.read(name)
+        run(tools/"aapt2","compile","--dir",source/"res","-o",build/"resources.zip")
+        overlays=[]
+        for i,resdir in enumerate(library_resources):
+            compiled=build/("library-res-"+str(i)+".zip")
+            run(tools/"aapt2","compile","--dir",resdir,"-o",compiled)
+            overlays += ["-R",compiled]
+        extra=["--extra-packages",":".join(resource_packages)] if resource_packages else []
+        run(tools/"aapt2","link","--manifest",source/"AndroidManifest.xml","-I",platform,
+            "--min-sdk-version",config["min_api"],"--target-sdk-version",config["min_api"],
+            "--version-code",config["code"],"--version-name",config["version"],
+            "--java",build/"generated","--auto-add-overlay",*extra,
+            "-o",build/"unsigned.apk",build/"resources.zip",*overlays)
         run(javac,"--release","17","-encoding","UTF-8","-cp",os.pathsep.join(map(str,[platform,api,*jars])),
-            "-d",build/"classes",*sorted((source/"src").rglob("*.java")),generated)
+            "-d",build/"classes",*sorted((source/"src").rglob("*.java")),*sorted((build/"generated").rglob("*.java")))
         run(java_bin/"jar","cf",build/"app.jar","-C",build/"classes",".")
         # libxposed is supplied by Vector, so it must not be packaged into the app.
         run(tools/"d8","--lib",platform,"--classpath",api,"--min-api",config["dex_api"],
             "--output",build/"dex",build/"app.jar",*jars,capture=True)
-        run(tools/"aapt2","compile","--dir",source/"res","-o",build/"resources.zip")
-        run(tools/"aapt2","link","--manifest",source/"AndroidManifest.xml","-I",platform,
-            "--min-sdk-version",config["min_api"],"--target-sdk-version",config["min_api"],
-            "--version-code",config["code"],"--version-name",config["version"],
-            "-o",build/"unsigned.apk",build/"resources.zip")
         with zipfile.ZipFile(build/"unsigned.apk","a",compression=zipfile.ZIP_DEFLATED) as archive:
             for path in sorted((build/"dex").glob("*.dex")): archive.write(path,path.name)
             for name,data in native.items(): archive.writestr(name,data)

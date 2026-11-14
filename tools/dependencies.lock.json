@@ -46,12 +46,231 @@
     "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.jar",
     "verified_algorithm": "sha1",
     "expected": "919f0dfe192fb4e063e7dacadee7f8bb9a2672a9",
-    "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478"
+    "sha256": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
+    "exclude_variants": [
+      "pixel-android17"
+    ]
   },
   {
     "file": "libxposed-api-102.0.0.aar",
     "url": "https://github.com/libxposed/api/releases/download/102.0.0/api-102.0.0.aar",
     "sha256": "423484a6e1807e7a423c4b88fcd8176d104318259d91791877fed88fe91479d0",
     "compile_only": true
+  },
+  {
+    "file": "com.google.android.gms.play-services-location-21.3.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/com/google/android/gms/play-services-location/21.3.0/play-services-location-21.3.0.aar",
+    "sha256": "d5024384d5bf66c75edf353d95eb8e7b5bf64483138474c6e2e93e2c2394f842",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "com.google.android.gms.play-services-base-18.5.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/com/google/android/gms/play-services-base/18.5.0/play-services-base-18.5.0.aar",
+    "sha256": "59a5c0c2da12311d75d965ce1f419498536b1a167fb28ff7dfc2dfd9cefa4157",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "com.google.android.gms.play-services-basement-18.4.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/com/google/android/gms/play-services-basement/18.4.0/play-services-basement-18.4.0.aar",
+    "sha256": "ce5c936fd66814b3602f5c6a5e929911ff973d4b05f6de9996da596bef97cad2",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "com.google.android.gms.play-services-tasks-18.2.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/com/google/android/gms/play-services-tasks/18.2.0/play-services-tasks-18.2.0.aar",
+    "sha256": "7f2aaa8f502068eaf54356ca92aec04271d6e7c416c52c45c0d23440fcbd1654",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "org.jetbrains.kotlinx.kotlinx-coroutines-android-1.7.3.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-android/1.7.3/kotlinx-coroutines-android-1.7.3.jar",
+    "sha256": "59fffb26bee12c32dadcfa5d420c2a7db85d3253518128b170efda726613256d",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "org.jetbrains.kotlinx.kotlinx-coroutines-core-jvm-1.7.3.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.7.3/kotlinx-coroutines-core-jvm-1.7.3.jar",
+    "sha256": "1ab3acc38f3e7355c4f9d1ec62107a46fa73c899f3070d055e5d4373dfe67e12",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.collection.collection-1.1.0.jar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/collection/collection/1.1.0/collection-1.1.0.jar",
+    "sha256": "632a0e5407461de774409352940e292a291037724207a787820c77daf7d33b72",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.core.core-1.2.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/core/core/1.2.0/core-1.2.0.aar",
+    "sha256": "524b8b88ceb6a74a7e44e6b567a135660f211799904cb218bfee5be1166820b2",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.fragment.fragment-1.1.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/fragment/fragment/1.1.0/fragment-1.1.0.aar",
+    "sha256": "a14c8b8f2153f128e800fbd266a6beab1c283982a29ec570d2cc05d307d81496",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "org.jetbrains.annotations-23.0.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar",
+    "sha256": "7b0f19724082cbfcbc66e5abea2b9bc92cf08a1ea11e191933ed43801eb3cd05",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.annotation.annotation-1.1.0.jar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/annotation/annotation/1.1.0/annotation-1.1.0.jar",
+    "sha256": "d38d63edb30f1467818d50aaf05f8a692dea8b31392a049bfa991b159ad5b692",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.lifecycle.lifecycle-runtime-2.1.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-runtime/2.1.0/lifecycle-runtime-2.1.0.aar",
+    "sha256": "e5173897b965e870651e83d9d5af1742d3f532d58863223a390ce3a194c8312b",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.versionedparcelable.versionedparcelable-1.1.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/versionedparcelable/versionedparcelable/1.1.0/versionedparcelable-1.1.0.aar",
+    "sha256": "9a1d77140ac222b7866b5054ee7d159bc1800987ed2d46dd6afdd145abb710c1",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.legacy.legacy-support-core-ui-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-ui/1.0.0/legacy-support-core-ui-1.0.0.aar",
+    "sha256": "0d1260c6e7e6a337f875df71b516931e703f716e90889817cd3a20fa5ac3d947",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.legacy.legacy-support-core-utils-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/legacy/legacy-support-core-utils/1.0.0/legacy-support-core-utils-1.0.0.aar",
+    "sha256": "a7edcf01d5b52b3034073027bc4775b78a4764bb6202bb91d61c829add8dd1c7",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.loader.loader-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/loader/loader/1.0.0/loader-1.0.0.aar",
+    "sha256": "11f735cb3b55c458d470bed9e25254375b518b4b1bad6926783a7026db0f5025",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.lifecycle.lifecycle-viewmodel-2.1.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-viewmodel/2.1.0/lifecycle-viewmodel-2.1.0.aar",
+    "sha256": "ba55fb7ac1b2828d5327cda8acf7085d990b2b4c43ef336caa67686249b8523d",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.viewpager.viewpager-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/viewpager/viewpager/1.0.0/viewpager-1.0.0.aar",
+    "sha256": "147af4e14a1984010d8f155e5e19d781f03c1d70dfed02a8e0d18428b8fc8682",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.activity.activity-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/activity/activity/1.0.0/activity-1.0.0.aar",
+    "sha256": "d1bc9842455c2e534415d88c44df4d52413b478db9093a1ba36324f705f44c3d",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.lifecycle.lifecycle-common-2.1.0.jar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-common/2.1.0/lifecycle-common-2.1.0.jar",
+    "sha256": "76db6be533bd730fb361c2feb12a2c26d9952824746847da82601ef81f082643",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.arch.core.core-common-2.1.0.jar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-common/2.1.0/core-common-2.1.0.jar",
+    "sha256": "fe1237bf029d063e7f29fe39aeaf73ef74c8b0a3658486fc29d3c54326653889",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.customview.customview-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/customview/customview/1.0.0/customview-1.0.0.aar",
+    "sha256": "20e5b8f6526a34595a604f56718da81167c0b40a7a94a57daa355663f2594df2",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.coordinatorlayout.coordinatorlayout-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/coordinatorlayout/coordinatorlayout/1.0.0/coordinatorlayout-1.0.0.aar",
+    "sha256": "e508c695489493374d942bf7b4ee02abf7571d25aac4c622e57d6cd5cd29eb73",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.drawerlayout.drawerlayout-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/drawerlayout/drawerlayout/1.0.0/drawerlayout-1.0.0.aar",
+    "sha256": "9402442cdc5a43cf62fb14f8cf98c63342d4d9d9b805c8033c6cf7e802749ac1",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.slidingpanelayout.slidingpanelayout-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/slidingpanelayout/slidingpanelayout/1.0.0/slidingpanelayout-1.0.0.aar",
+    "sha256": "76bffb7cefbf780794d8817002dad1562f3e27c0a9f746d62401c8edb30aeede",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.interpolator.interpolator-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/interpolator/interpolator/1.0.0/interpolator-1.0.0.aar",
+    "sha256": "33193135a64fe21fa2c35eec6688f1a76e512606c0fc83dc1b689e37add7732a",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.swiperefreshlayout.swiperefreshlayout-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/swiperefreshlayout/swiperefreshlayout/1.0.0/swiperefreshlayout-1.0.0.aar",
+    "sha256": "9761b3a809c9b093fd06a3c4bbc645756dec0e95b5c9da419bc9f2a3f3026e8d",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.asynclayoutinflater.asynclayoutinflater-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/asynclayoutinflater/asynclayoutinflater/1.0.0/asynclayoutinflater-1.0.0.aar",
+    "sha256": "f7eab60c57addd94bb06275832fe7600611beaaae1a1ec597c231956faf96c8b",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.cursoradapter.cursoradapter-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/cursoradapter/cursoradapter/1.0.0/cursoradapter-1.0.0.aar",
+    "sha256": "a81c8fe78815fa47df5b749deb52727ad11f9397da58b16017f4eb2c11e28564",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.documentfile.documentfile-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/documentfile/documentfile/1.0.0/documentfile-1.0.0.aar",
+    "sha256": "865a061ef2fad16522f8433536b8d47208c46ff7c7745197dfa1eeb481869487",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.localbroadcastmanager.localbroadcastmanager-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/localbroadcastmanager/localbroadcastmanager/1.0.0/localbroadcastmanager-1.0.0.aar",
+    "sha256": "e71c328ceef5c4a7d76f2d86df1b65d65fe2acf868b1a4efd84a3f34336186d8",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.print.print-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/print/print/1.0.0/print-1.0.0.aar",
+    "sha256": "1d5c7f3135a1bba661fc373fd72e11eb0a4adbb3396787826dd8e4190d5d9edd",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.lifecycle.lifecycle-livedata-2.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata/2.0.0/lifecycle-livedata-2.0.0.aar",
+    "sha256": "c82609ced8c498f0a701a30fb6771bb7480860daee84d82e0a81ee86edf7ba39",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.savedstate.savedstate-1.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/savedstate/savedstate/1.0.0/savedstate-1.0.0.aar",
+    "sha256": "2510a5619c37579c9ce1a04574faaf323cd0ffe2fc4e20fa8f8f01e5bb402e83",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.arch.core.core-runtime-2.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/arch/core/core-runtime/2.0.0/core-runtime-2.0.0.aar",
+    "sha256": "87e65fc767c712b437649c7cee2431ebb4bed6daef82e501d4125b3ed3f65f8e",
+    "variant": "pixel-android17"
+  },
+  {
+    "file": "androidx.lifecycle.lifecycle-livedata-core-2.0.0.aar",
+    "url": "https://dl.google.com/dl/android/maven2/androidx/lifecycle/lifecycle-livedata-core/2.0.0/lifecycle-livedata-core-2.0.0.aar",
+    "sha256": "fde334ec7e22744c0f5bfe7caf1a84c9d717327044400577bdf9bd921ec4f7bc",
+    "variant": "pixel-android17"
   }
 ]

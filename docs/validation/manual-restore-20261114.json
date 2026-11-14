@@ -1,0 +1,55 @@
+{
+  "version": "0.5.6-public",
+  "gms_version": "26.45.31",
+  "result": "PASS",
+  "tested_user": 0,
+  "cause": [
+    "Framework mock providers removed but GMS mock engine/cache retained the manual point",
+    "GMS 26.45.31 NLP callback was not yet adapted in 0.5.5"
+  ],
+  "fix": [
+    "Reviewed report-only NlpReport callback profile for GMS 264531035",
+    "Official FusedLocationProviderClient.setMockMode(false) on Stop, including repeated Stop",
+    "getCurrentLocation: high accuracy, maxUpdateAgeMillis=0; accept only post-stop non-mock fixes",
+    "60-second timeout reports failure rather than claiming restoration"
+  ],
+  "successful_restore_requests": [
+    {
+      "request_local": "11-14 13:30:40.175",
+      "complete_local": "11-14 13:31:14.439",
+      "elapsed_ms": 34264,
+      "method": "intermediate build; Maps assisted"
+    },
+    {
+      "request_local": "11-14 13:32:39.703",
+      "complete_local": "11-14 13:32:50.177",
+      "elapsed_ms": 10474,
+      "method": "independent recovery request; no Maps/Weather opened to trigger a fix"
+    },
+    {
+      "request_local": "11-14 13:35:04.316",
+      "complete_local": "11-14 13:35:14.904",
+      "elapsed_ms": 10588,
+      "method": "independent recovery request; no Maps/Weather opened to trigger a fix"
+    }
+  ],
+  "independent_round_trip_without_opening_maps_or_weather": "PASS: 13:32:39.703 -> 13:32:50.177",
+  "gms_process_restart_recovery": "PASS",
+  "gms_primary_last_location_is_mock": false,
+  "weather_location_returned_to_actual_region": true,
+  "maps_continuous_real_location": "PASS",
+  "kwgt_location_returned_to_real_region": true,
+  "kwgt_accuracy_m": 45.0,
+  "kwgt_weather_refresh": "PASS",
+  "input_and_lifecycle_host_checks": 18,
+  "public_config_checks": 13,
+  "freshness_checks": 11,
+  "provider_protocol_checks": 4,
+  "restoration_cache_policy_checks": 9,
+  "core_contract_checks": 6,
+  "q25_source_changed": false,
+  "whole_device_reboot": "NOT_TESTED",
+  "work_profile_gms_adaptation": "NOT_TESTED / outside existing hook scope",
+  "final_manual_enabled": false,
+  "target_coordinate_settings_preserved": true
+}

@@ -9,6 +9,7 @@ ENV=dict(os.environ)
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--old-apk",required=True,type=Path)
 parser.add_argument("--new-apk",required=True,type=Path)
+parser.add_argument("--latest-apk",type=Path)
 args=parser.parse_args()
 
 out=ROOT/'build/contract-test'
@@ -45,6 +46,12 @@ for label,source in [('old',args.old_apk),('new',args.new_apk)]:
   write(temp/'missing.apk',{n:b for n,b in dex.items() if n!='classes2.dex'})
   assert check(temp/'missing.apk',names).returncode!=0
   passed.append('missing helper/receiver classes: rejected')
-report={'result':'PASS','checks':passed,'scope':'host only; modified copies never installed'}
+if args.latest_apk:
+ expected=(ROOT/'variants/pixel-android17/tests/gms-contract/264531035.txt').read_text()
+ names=[line.split('=')[0] for line in expected.splitlines()]
+ result=check(args.latest_apk,names)
+ assert result.returncode==0 and result.stdout==expected
+ passed.append('26.45.31 report-only callback profile: reviewed fingerprints match')
+report={'result':'PASS' ,'checks':passed,'scope':'host only; modified copies never installed'}
 
 print(json.dumps(report,indent=2))

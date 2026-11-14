@@ -17,3 +17,9 @@
 使用者需要自行申请合法的 Android 定位 AK 并履行百度 SDK/平台要求的数据处理与隐私告知。参考[官方集成文档](https://lbsyun.baidu.com/docs/android?title=android-locsdk/guide/create-project/android-studio)与[隐私接口说明](https://lbsyun.baidu.com/docs/android?title=android-locsdk/android-privacy)。
 
 Google Play 服务、Android ROM 和地图应用未随本项目分发。仓库不含 Google APK、反编译源码或手机私有日志；适配仅提供与实际安装版本互操作的接口信息。
+
+## Pixel 0.5.6：官方 GMS 模拟模式退出
+
+Pixel 变体额外打包 Google Play services Location 客户端 SDK 21.3.0，以及 base 18.5.0、basement 18.4.0、tasks 18.2.0。它们来自 Google Maven，按上游 POM 标注的 [Android SDK License](https://developer.android.com/studio/terms.html) 使用。它们是客户端库，不是手机上的 Google Play 服务 APK。
+
+对应传递依赖包括 AndroidX（Apache-2.0）、Kotlin Coroutines 1.7.3（Apache-2.0）、JetBrains annotations 23.0.0（Apache-2.0）；确切工件、来源和 SHA256 固定在依赖锁文件。仅 Pixel 打包这些新增依赖，Q25 仍沿用原依赖集合。

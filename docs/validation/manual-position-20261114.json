@@ -1,0 +1,29 @@
+{
+  "test_time_local": "2026-11-14T12:28:52.430130+08:00",
+  "version": "0.5.5-public",
+  "version_code": 13,
+  "device": "Pixel 10 Pro XL",
+  "android_build": "CP3A.261005.005",
+  "gms_version": "26.45.31",
+  "result": "PARTIAL: provider restoration alone did not restore GMS automatic location",
+  "manual_location": {
+    "system_gps_and_network": "PASS",
+    "system_and_gms_fused": "PASS",
+    "mock_flag_preserved": true,
+    "weather_current_location_changed": "PASS",
+    "start_without_mock_permission_rejected": "PASS",
+    "stop_removed_overrides_and_restored_original_providers": "PASS",
+    "real_network_observation_after_stop": "PASS: code 161, accuracy 45 m",
+    "process_kill_did_not_resume_publication": "PASS",
+    "interrupted_session_cleanup_via_stop": "PASS",
+    "user_target_stored_in_public_report": false
+  },
+  "host_policy_checks": 18,
+  "public_configuration_checks": 13,
+  "freshness_and_format_checks": 11,
+  "provider_protocol_checks": 4,
+  "phone_reboot": "NOT_TESTED",
+  "gms_264531035_real_network_internal_adapter": "NOT_ADAPTED; manual API path is independent",
+  "final_state": "User-requested manual location enabled; precise target saved only on device/private diagnostics",
+  "known_regression_fixed_in": "0.5.6-public; see manual-restore-20261114.json"
+}

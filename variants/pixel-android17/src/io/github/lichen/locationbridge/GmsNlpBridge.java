@@ -45,8 +45,8 @@ final class GmsNlpBridge {
             reportLocation=reportClass.getDeclaredMethod("a");
             if(reportLocation.getReturnType()!=Location.class)throw new NoSuchMethodException("report result");
             reportConstructor=reportClass.getDeclaredConstructor(Location.class,Location.class,int.class,wifiScan,byte[].class);
-            modernReports=Class.forName(profile.selector(),false,loader).getDeclaredMethod(profile.flag());
-            if(modernReports.getReturnType()!=boolean.class||!Modifier.isStatic(modernReports.getModifiers()))
+            modernReports=profile.selector().isEmpty()?null:Class.forName(profile.selector(),false,loader).getDeclaredMethod(profile.flag());
+            if(modernReports!=null&&(modernReports.getReturnType()!=boolean.class||!Modifier.isStatic(modernReports.getModifiers())))
                 throw new NoSuchMethodException("report selector");
             Method request=helper.getDeclaredMethod("a",long.class,long.class);
             Method stop=helper.getDeclaredMethod("b");
@@ -180,7 +180,7 @@ final class GmsNlpBridge {
                 }
                 Location copy=copyForGms(original);
                 if(copy==null){log("UNSUPPORTED_NETWORK_SOURCE");return;}
-                boolean reports=(Boolean)modernReports.invoke(null);
+                boolean reports=modernReports==null||(Boolean)modernReports.invoke(null);
                 ArrayList<Object> payload=new ArrayList<>();
                 if(reports) {
                     String type=copy.getExtras().getString("networkLocationType","");

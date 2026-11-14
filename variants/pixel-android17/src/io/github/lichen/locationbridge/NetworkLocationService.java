@@ -18,6 +18,13 @@ import java.util.*;
 
 /** Real network positioning only. No mock providers, fake timestamps or GNSS injection. */
 public final class NetworkLocationService extends Service {
+    private static NetworkLocationService instance;
+    static void pauseForManual() {
+        if(instance!=null&&ManualLocationService.blocksAutomatic(instance)) {
+            instance.cancelRestoration();instance.stopClient();instance.manualUntil=0;instance.lastRequestElapsed=0;
+            instance.status="manual_position_active";instance.writeStatus();
+        }
+    }
     private final Handler main=new Handler(Looper.getMainLooper());
     private LocationClient client;
     private IBinder manager;
@@ -28,18 +35,79 @@ public final class NetworkLocationService extends Service {
     private boolean foreground,sessionAccepted;
     private long lastRequestElapsed;
     private int sdkGeneration;
+    private long restoreStartedNanos,restoreDeadline;
+    private com.google.android.gms.tasks.CancellationTokenSource restoreCancellation;
+    private final Runnable restoreTimeout=()->finishRestoration(false);
+    private void requestRestoration() {
+        cancelRestoration();
+        if(ManualLocationService.blocksAutomatic(this))return;
+        restoreStartedNanos=SystemClock.elapsedRealtimeNanos();restoreDeadline=SystemClock.elapsedRealtime()+60_000;
+        manualUntil=restoreDeadline;lastRequestElapsed=0;
+        getSharedPreferences(ManualLocationService.PREFS,MODE_PRIVATE).edit().putString("status","手动位置已停止，正在等待真实融合定位").apply();
+        long generation=restoreStartedNanos;
+        main.postDelayed(restoreTimeout,60_000);
+        try {
+            // Removing framework test providers does not necessarily exit FLP mock mode.
+            com.google.android.gms.location.LocationServices.getFusedLocationProviderClient(this).setMockMode(false)
+                    .addOnSuccessListener(main::post,unused->{if(restoreStartedNanos==generation)listenForRealRestoration();})
+                    .addOnFailureListener(main::post,error->{if(restoreStartedNanos==generation){event("RESTORE_GMS_EXIT_FAILED",error.getClass().getSimpleName());finishRestoration(false);}});
+            event("RESTORE_REQUESTED","exiting_gms_mock_mode");
+        } catch(RuntimeException|LinkageError e){finishRestoration(false);}
+    }
+    private void listenForRealRestoration() {
+        event("RESTORE_GMS_MOCK_EXITED","requesting_new_real_fused_fix");
+        requestFreshGmsLocation(restoreStartedNanos);
+    }
+    private void requestFreshGmsLocation(long generation) {
+        if(generation==0||restoreStartedNanos!=generation)return;
+        long remaining=restoreDeadline-SystemClock.elapsedRealtime();
+        if(remaining<=0){finishRestoration(false);return;}
+        restoreCancellation=new com.google.android.gms.tasks.CancellationTokenSource();
+        com.google.android.gms.location.CurrentLocationRequest request=new com.google.android.gms.location.CurrentLocationRequest.Builder()
+                .setPriority(com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY)
+                .setMaxUpdateAgeMillis(0).setDurationMillis(Math.max(1000,Math.min(55_000,remaining))).build();
+        try {
+            com.google.android.gms.location.LocationServices.getFusedLocationProviderClient(this)
+                    .getCurrentLocation(request,restoreCancellation.getToken())
+                    .addOnSuccessListener(main::post,fix->{
+                        if(restoreStartedNanos!=generation)return;
+                        restoreCancellation=null;
+                        if(restoredFix(fix,generation,SystemClock.elapsedRealtimeNanos()))finishRestoration(true);
+                        else main.postDelayed(()->requestFreshGmsLocation(generation),1000);
+                    })
+                    .addOnFailureListener(main::post,error->{if(restoreStartedNanos==generation)finishRestoration(false);});
+        } catch(RuntimeException|LinkageError e){finishRestoration(false);}
+    }
+    static boolean restoredFix(Location fix,long started,long now) {
+        return fix!=null&&!fix.isMock()&&fix.hasAccuracy()&&Float.isFinite(fix.getAccuracy())&&fix.getAccuracy()>0
+                &&started>0&&fix.getElapsedRealtimeNanos()>=started&&fix.getElapsedRealtimeNanos()<=now
+                &&now-fix.getElapsedRealtimeNanos()<=30_000_000_000L;
+    }
+    private void cancelRestoration() {
+        main.removeCallbacks(restoreTimeout);
+        if(restoreCancellation!=null){restoreCancellation.cancel();restoreCancellation=null;}
+        restoreStartedNanos=0;restoreDeadline=0;
+    }
+    private void finishRestoration(boolean success) {
+        if(restoreStartedNanos==0)return;
+        cancelRestoration();manualUntil=0;
+        getSharedPreferences(ManualLocationService.PREFS,MODE_PRIVATE).edit().putString("status",success?"已恢复真实融合定位":"模拟位置已停止，但未取得新的真实融合位置；请检查自动定位权限、AK 和 GMS 兼容性").apply();
+        event("RESTORE_COMPLETED",success?"real_fused_fix":"no_real_fused_fix");updateDemand();
+    }
     private final Runnable tick=new Runnable() {
         @Override public void run() { updateDemand();writeStatus();main.postDelayed(this,5000); }
     };
 
     @Override public void onCreate() {
-        super.onCreate();
+        super.onCreate();instance=this;
         getSystemService(NotificationManager.class).createNotificationChannel(new NotificationChannel(
                 "location","网络定位桥接",NotificationManager.IMPORTANCE_LOW));
         main.post(tick);event("SERVICE_CREATED","sdk="+Build.VERSION.SDK_INT);
     }
     @Override public int onStartCommand(Intent intent,int flags,int startId) {
-        if(intent!=null&&"TEST_START".equals(intent.getAction())) {
+        if(intent!=null&&"RESTORE_AUTOMATIC".equals(intent.getAction())) {
+            requestRestoration();
+        } else if(intent!=null&&"TEST_START".equals(intent.getAction())) {
             manualUntil=SystemClock.elapsedRealtime()+120_000;
             getSharedPreferences("bridge",MODE_PRIVATE).edit().putBoolean("consent",true).apply();
         } else if(intent!=null&&"TEST_STOP".equals(intent.getAction())) manualUntil=0;
@@ -86,6 +154,9 @@ public final class NetworkLocationService extends Service {
         return Math.max(10_000,requestedInterval);
     }
     private void updateDemand() {
+        if(ManualLocationService.blocksAutomatic(this)) {
+            stopClient();manualUntil=0;lastRequestElapsed=0;status="manual_position_active";writeStatus();return;
+        }
         boolean demand=manualUntil>SystemClock.elapsedRealtime()||(manager!=null&&requestedInterval!=Long.MAX_VALUE);
         if(!demand||!allowed()) { stopClient();lastRequestElapsed=0;status=demand?"permission_or_location_disabled":"idle";return; }
         if(client!=null&&sessionAccepted&&requestPeriod()>=60_000){stopClient();return;}
@@ -153,7 +224,7 @@ public final class NetworkLocationService extends Service {
         return value.getTime();
     }
     private void receive(BDLocation fix) {
-        if(client==null||!allowed()||fix==null)return;
+        if(client==null||!allowed()||fix==null||ManualLocationService.blocksAutomatic(this))return;
         lastCode=fix.getLocType();coordinateType=fix.getCoorType();source=fix.getNetworkLocationType();
         event("SDK_CALLBACK","code="+lastCode+";crs="+coordinateType+";source="+source);
         try {
@@ -230,5 +301,5 @@ public final class NetworkLocationService extends Service {
     @Override protected void dump(FileDescriptor fd,PrintWriter writer,String[] args) {
         try{writer.println(statusJson());}catch(Exception e){writer.println("status_unavailable");}
     }
-    @Override public void onDestroy() { main.removeCallbacks(tick);stopClient();super.onDestroy(); }
+    @Override public void onDestroy() { main.removeCallbacks(tick);cancelRestoration();stopClient();if(instance==this)instance=null;super.onDestroy(); }
 }

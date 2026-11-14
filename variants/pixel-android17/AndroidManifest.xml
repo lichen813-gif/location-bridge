@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.lichen.locationbridge">
     <uses-sdk android:minSdkVersion="37" android:targetSdkVersion="37" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -16,12 +17,14 @@
         android:description="@string/module_description"
         android:allowBackup="false" android:usesCleartextTraffic="false" android:extractNativeLibs="true"
         android:supportsRtl="true" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <meta-data android:name="com.google.android.gms.version" android:value="12451000" />
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".ManualLocationService" android:exported="false" android:foregroundServiceType="location" />
         <service android:name="com.baidu.location.f" android:exported="false" android:process=":baidu" />
         <service android:name=".NetworkLocationService" android:exported="false" android:foregroundServiceType="location">
             <intent-filter>

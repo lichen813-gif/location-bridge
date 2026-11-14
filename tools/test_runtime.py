@@ -37,7 +37,9 @@ def main():
     try:
         adb("push",apk,remote_apk);adb("push",dex,remote_test)
         adb("shell","chmod","0444",remote_apk,remote_test)
-        for cls in ["PublicConfigPolicyTestMain","GmsFreshnessPolicyTestMain","ProtocolTestMain"]:
+        classes=["PublicConfigPolicyTestMain","GmsFreshnessPolicyTestMain","ProtocolTestMain"]
+        if a.variant=="pixel-android17":classes.append("RestorationPolicyTestMain")
+        for cls in classes:
             cmd="CLASSPATH="+shlex.quote(remote_apk+":"+remote_test)+" /system/bin/app_process /system/bin io.github.lichen.locationbridge."+cls
             print(adb("shell",cmd))
     finally:adb("shell","rm","-f",remote_apk,remote_test)

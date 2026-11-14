@@ -13,7 +13,7 @@ import shutil
 import subprocess
 
 TARGETS={
-    "pixel-android17":{"sdk":"37","device":"mustang","build":"CP3A.261005.005","gms":["3d281d7ec8467cb94b33ba350a25b2dfbb92f3918a2dbfca8925e496dc75abde","04ef400a85137c68f3eec8113f1a3bdb81f63561db9514298c1e9bbf0ec40ae8"]},
+    "pixel-android17":{"sdk":"37","device":"mustang","build":"CP3A.261005.005","gms":["3d281d7ec8467cb94b33ba350a25b2dfbb92f3918a2dbfca8925e496dc75abde","04ef400a85137c68f3eec8113f1a3bdb81f63561db9514298c1e9bbf0ec40ae8","bd596149da4178510fdb00abf417747300e45e73b08433dadbd6e14b329ba6f2"]},
     "q25-android14":{"sdk":"34","device":"Q25","fingerprint":"Xelex/Xelex10_Ultra/Xelex10_Ultra:14/20240427/UP1v:user/release-keys","gms":"489ae6b16a2dc4aa69ecbaab3a8f1e3735247a6fe91b92ba270b6c30d7a02820"},
 }
 
@@ -54,8 +54,10 @@ def main():
     meta=json.loads(metadata_path.read_text())
     if meta.get("variant")!=a.variant or meta.get("sha256")!=hashlib.sha256(a.apk.read_bytes()).hexdigest():
         raise SystemExit("APK variant or checksum does not match its metadata. No changes made.")
-    if a.variant=="pixel-android17" and actual["gms_apk_sha256"]==expected["gms"][1] and int(meta.get("code",0))<12:
-        raise SystemExit("GMS 26.42.31 requires Pixel public version 0.5.4 or newer. No changes made.")
+    if a.variant=="pixel-android17":
+        minimum_code=[0,12,14][known.index(actual["gms_apk_sha256"])]
+        if int(meta.get("code",0))<minimum_code:
+            raise SystemExit("This GMS APK requires a newer Pixel bridge release. No changes made.")
     if not meta.get("signer_certificate_sha256"):raise SystemExit("Unsigned builds cannot be installed.")
     print(adb("install","--no-incremental","-r","--user","0",a.apk))
     package="io.github.lichen.locationbridge"
