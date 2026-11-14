@@ -23,6 +23,11 @@ public final class BridgeModule extends XposedModule {
     private final AtomicBoolean gmsAttempted=new AtomicBoolean();
     private final AtomicBoolean selected=new AtomicBoolean(),failureReported=new AtomicBoolean();
 
+    private static boolean supportsSystemBuild() {
+        return Build.VERSION.SDK_INT==37&&("CP3A.261005.005".equals(Build.ID)
+                ||"CP4A.261105.040.A1".equals(Build.ID));
+    }
+
     @Override public void onModuleLoaded(ModuleLoadedParam p) {
         systemServer=p.isSystemServer();
         processName=p.getProcessName();
@@ -31,12 +36,12 @@ public final class BridgeModule extends XposedModule {
     @Override public void onPackageReady(PackageReadyParam p) {
         if(!systemServer&&"com.google.android.gms".equals(p.getPackageName())
                 &&"com.google.android.gms".equals(processName)&&android.os.Process.myUid()/100000==0
-                &&Build.VERSION.SDK_INT==37&&"CP3A.261005.005".equals(Build.ID)&&getApiVersion()>=102
+                &&supportsSystemBuild()&&getApiVersion()>=102
                 &&gmsAttempted.compareAndSet(false,true))
             new GmsNlpBridge(this).install(p.getClassLoader(),p.getApplicationInfo().sourceDir);
     }
     @Override public void onSystemServerStarting(SystemServerStartingParam p) {
-        if(!systemServer||Build.VERSION.SDK_INT!=37||!"CP3A.261005.005".equals(Build.ID)
+        if(!systemServer||!supportsSystemBuild()
                 ||getApiVersion()<102||(getFrameworkProperties()&PROP_CAP_SYSTEM)==0) return;
         try {
             Class<?> supplier=Class.forName(SystemProbe.SUPPLIER,false,p.getClassLoader());

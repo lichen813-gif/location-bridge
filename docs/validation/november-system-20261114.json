@@ -1,0 +1,73 @@
+{
+  "test_time": "2026-11-14T18:18:42.804451+08:00",
+  "device": "Pixel 10 Pro XL / mustang",
+  "system_build": "CP4A.261105.040.A1",
+  "security_patch": "2026-11-05",
+  "bridge_version": "0.5.7-public",
+  "version_code": 15,
+  "apk_sha256": "22f1b793323d0f34bf2837dd54c029e6aa703d3994b1f29d2aacb5e6814b34c6",
+  "gms_version": "26.45.31",
+  "gms_apk_sha256": "bd596149da4178510fdb00abf417747300e45e73b08433dadbd6e14b329ba6f2",
+  "framework": "Vector 2.2 build 3080 / API 102, Magisk 31.1 built-in Zygisk",
+  "system_contract": "PASS: service selection factory, hook fields/methods/constructor, provider base/report and request binder",
+  "runtime_checks": {
+    "configuration": 13,
+    "freshness_and_format": 11,
+    "provider_request_parcel_round_trips": 4,
+    "restoration_policy": 9
+  },
+  "installation": {
+    "signed_public_apk_installed": true,
+    "installer_read_only_check": "PASS",
+    "older_056_refused_on_november_before_install": true,
+    "vector_module_path_refreshed_before_final_boot": true
+  },
+  "automatic_location": {
+    "after_whole_device_reboot_and_unlock": true,
+    "system_network_bound_to_bridge": true,
+    "source": "real Wi-Fi observation",
+    "accuracy_m": 45,
+    "system_fixes_delivered": 9,
+    "manual_test_active": false
+  },
+  "maps": {
+    "result": "PASS",
+    "continuous_fresh_gms_deliveries": [
+      "18:13:33.591",
+      "18:13:46.963"
+    ]
+  },
+  "pixel_weather": {
+    "result": "PASS",
+    "current_location_matches_real_area": true,
+    "fresh_weather_fetch_observed": true,
+    "displayed_weather_update_time": "18:14",
+    "independent_fresh_measurement_without_shared_fused_cache": "not separately forced"
+  },
+  "kwgt": {
+    "result": "PASS: automatic location",
+    "after_unlock_gms_deliveries": [
+      "18:11:44.791",
+      "18:11:45.146",
+      "18:11:45.338"
+    ],
+    "accuracy_m": 45,
+    "distance_to_latest_bridge_fix_m": 3.4,
+    "weather_refresh_in_final_boot": "not forced; existing weather cache retained"
+  },
+  "manual_location": {
+    "active_at_end": false,
+    "november_live_mock_to_real_cycle": "not repeated; 9 restoration policy checks passed; see October 0.5.6 live record"
+  },
+  "preservation": {
+    "app_data_cleared": false,
+    "google_accounts_removed": false,
+    "gms_apk_replaced": false,
+    "mock_locations_published_in_this_regression": false
+  },
+  "limits": [
+    "Only the listed device/build/GMS combination was tested.",
+    "Work profile GMS, long background periods and battery use not covered.",
+    "October build remains allowed but was not reflashed for this release."
+  ]
+}

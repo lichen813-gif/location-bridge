@@ -14,7 +14,7 @@
    cd location-bridge
    ```
 
-5. 从对应 Release 下载 APK、同名 `.apk.json` 和 `SHA256SUMS`。Pixel 的 GMS 26.45.31 需要 0.5.6-public；可从 [v0.5.6-public Release](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.6-public) 下载。旧版 0.5.4 不包含该适配。手动定位及停止后的真实位置恢复见[手动位置说明](MANUAL_LOCATION.zh-CN.md)。下面所有命令都在仓库目录内运行，APK 路径按实际下载位置填写。
+5. 从对应 Release 下载 APK、同名 `.apk.json` 和 `SHA256SUMS`。Pixel 的十一月系统需要 0.5.7-public；可从 [v0.5.7-public Release](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.7-public) 下载。十月系统的 GMS 26.45.31 至少需要 0.5.6-public。旧版 0.5.4 不包含该适配。手动定位及停止后的真实位置恢复见[手动位置说明](MANUAL_LOCATION.zh-CN.md)。下面所有命令都在仓库目录内运行，APK 路径按实际下载位置填写。
 
 ## 二、只读核对兼容性
 
@@ -55,7 +55,7 @@ python3 tools/install.py --serial SERIAL --variant q25-android14 --check
 Pixel：
 
 ```sh
-python3 tools/install.py --serial SERIAL --variant pixel-android17 --apk /实际路径/location-bridge-pixel-android17-0.5.6-public.apk
+python3 tools/install.py --serial SERIAL --variant pixel-android17 --apk /实际路径/location-bridge-pixel-android17-0.5.7-public.apk
 ```
 
 Q25：

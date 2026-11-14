@@ -15,7 +15,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 VARIANTS = {
-    "pixel-android17": {"min_api": 37, "dex_api": 36, "version": "0.5.6-public", "code": 14},
+    "pixel-android17": {"min_api": 37, "dex_api": 36, "version": "0.5.7-public", "code": 15},
     "q25-android14": {"min_api": 34, "dex_api": 34, "version": "0.6.1-public", "code": 11},
 }
 

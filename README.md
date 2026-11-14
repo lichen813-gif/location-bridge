@@ -6,18 +6,20 @@
 
 | 下载版本 | 目标手机与系统 | GMS 版本 | 对应工程 |
 | --- | --- | --- | --- |
-| [Pixel Android 17 · 0.5.6-public](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.6-public) | Pixel 10 Pro XL / mustang，Android 17 `CP3A.261005.005` | `26.45.31` / `264531035`，保留两版旧布局，核心代码校验 | [pixel-android17](variants/pixel-android17) |
+| [Pixel Android 17 · 0.5.7-public](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.7-public) | Pixel 10 Pro XL / mustang，Android 17 `CP3A.261005.005` / `CP4A.261105.040.A1` | `26.45.31` / `264531035`，保留两版旧布局，核心代码校验 | [pixel-android17](variants/pixel-android17) |
 | [Q25 Android 14 · 0.6.1-public](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.6.1-public) | Zinwa Q25 / Xelex Q25，Android 14 `UP1A.231005.007`，指定系统指纹 | `26.40.32` / `264032029`，指定 APK 指纹 | [q25-android14](variants/q25-android14) |
 
 **公开 APK 不内置任何开发者的百度 AK。** 安装后需要自己申请 Android 定位 AK，在应用内保存并同意定位数据处理。两套 APK 都是 ARM64，包名相同 `io.github.lichen.locationbridge`，应按设备选用。
 
-## 最新版本：Pixel 0.5.6-public
+## 最新版本：Pixel 0.5.7-public
+
+增加十一月系统 **CP4A.261105.040.A1** 的精确版本适配，保留十月系统支持。新系统上的服务选择结构和 ProviderRequest 协议已在真机核对；仍会拒绝其他未经核验的系统版本。
 
 已适配 GMS **26.45.31 / 264531035** 的 NlpReport-only 回调，保留 26.41.63、26.42.31 已审阅布局。通过定位核心代码和运行时结构校验，无关资源更新且核心校验通过时可继续工作；不保证任意后续 GMS 更新兼容。
 
 新增手动经纬度、WGS84/GCJ-02 选择与系统 GPS/网络模拟定位。手动模式无需百度 AK，保留模拟位置标记，不会在重启后自动启用。停止时退出 GMS 模拟模式，主动请求新鲜真实融合位置，验证成功后才显示恢复完成，修复 0.5.5 停止后仍显示旧位置的问题。详见[手动位置说明](docs/MANUAL_LOCATION.zh-CN.md)。
 
-[下载 Pixel 0.5.6-public APK 及校验文件](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.6-public)。真机验证包括手动到自动切换、天气、Maps、KWGT 与 GMS 进程恢复；完整范围和未覆盖项见[测试文档](docs/VALIDATION.zh-CN.md)。
+[下载 Pixel 0.5.7-public APK 及校验文件](https://github.com/lichen813-gif/location-bridge/releases/tag/v0.5.7-public)。手动到自动切换等既有验证与十一月系统回归的范围分别记录，见[测试文档](docs/VALIDATION.zh-CN.md)。
 
 ## 开始使用
 

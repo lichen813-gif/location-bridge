@@ -11,7 +11,7 @@
 ## Pixel 版本
 
 - 设备：Pixel 10 Pro XL，`ro.product.device=mustang`。
-- Android 17 / API 37，Build `CP3A.261005.005`。
+- Android 17 / API 37：十月 Build `CP3A.261005.005`；0.5.7-public 增加十一月 Build `CP4A.261105.040.A1`。十一月系统需 0.5.7-public 或后续明确支持的版本。
 - Pixel 0.5.6-public 增加 GMS `26.45.31` / `264531035` 的 NlpReport-only 回调适配。旧版 0.5.4 Release 不包含此适配。
 - Pixel 0.5.4-public：GMS `26.42.31` / `264231035`，保留 `26.41.63` / `264163035` 布局。既有 Release 0.5.3-public 仅支持旧 GMS。
 - 新版 GMS base APK SHA256：`04ef400a85137c68f3eec8113f1a3bdb81f63561db9514298c1e9bbf0ec40ae8`。

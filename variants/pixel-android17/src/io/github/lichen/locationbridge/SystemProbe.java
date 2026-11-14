@@ -37,6 +37,17 @@ public final class SystemProbe {
         result.put("mode", "read_only_class_inventory");
         result.put("locations_read_or_written", "0");
         check(result, "network_selection_factory", () -> findNetworkFactory(loader).toString());
+        check(result, "selection_hook_contract", () -> {
+            Class<?> supplier = Class.forName(SUPPLIER, false, loader);
+            Class<?> info = Class.forName(SUPPLIER+"$BoundServiceInfo", false, loader);
+            if (supplier.getDeclaredField("mContext").getType()!=Context.class
+                    ||supplier.getDeclaredField("mIntent").getType()!=android.content.Intent.class
+                    ||supplier.getDeclaredMethod("getServiceInfo").getReturnType()!=info
+                    ||info.getMethod("getUserId").getReturnType()!=int.class) {
+                throw new NoSuchMethodException("Unexpected service selection layout");
+            }
+            return info.getDeclaredConstructor(String.class, android.content.pm.ResolveInfo.class).toString();
+        });
         check(result, "supplier_constructor", () -> {
             Constructor<?> c = Class.forName(SUPPLIER, false, loader).getDeclaredConstructor(
                     Context.class, String.class, String.class, String.class, String.class,

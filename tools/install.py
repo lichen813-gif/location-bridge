@@ -13,7 +13,7 @@ import shutil
 import subprocess
 
 TARGETS={
-    "pixel-android17":{"sdk":"37","device":"mustang","build":"CP3A.261005.005","gms":["3d281d7ec8467cb94b33ba350a25b2dfbb92f3918a2dbfca8925e496dc75abde","04ef400a85137c68f3eec8113f1a3bdb81f63561db9514298c1e9bbf0ec40ae8","bd596149da4178510fdb00abf417747300e45e73b08433dadbd6e14b329ba6f2"]},
+    "pixel-android17":{"sdk":"37","device":"mustang","build":["CP3A.261005.005","CP4A.261105.040.A1"],"gms":["3d281d7ec8467cb94b33ba350a25b2dfbb92f3918a2dbfca8925e496dc75abde","04ef400a85137c68f3eec8113f1a3bdb81f63561db9514298c1e9bbf0ec40ae8","bd596149da4178510fdb00abf417747300e45e73b08433dadbd6e14b329ba6f2"]},
     "q25-android14":{"sdk":"34","device":"Q25","fingerprint":"Xelex/Xelex10_Ultra/Xelex10_Ultra:14/20240427/UP1v:user/release-keys","gms":"489ae6b16a2dc4aa69ecbaab3a8f1e3735247a6fe91b92ba270b6c30d7a02820"},
 }
 
@@ -35,7 +35,9 @@ def main():
     expected=TARGETS[a.variant]
     actual={"sdk":prop("ro.build.version.sdk"),"device":prop("ro.product.device"),"build":prop("ro.build.id"),"fingerprint":prop("ro.build.fingerprint")}
     for key in ["sdk","device","build","fingerprint"]:
-        if key in expected and expected[key]!=actual[key]:raise SystemExit("Unsupported system: "+key+" differs. No changes made.")
+        if key in expected:
+            allowed=expected[key] if isinstance(expected[key],list) else [expected[key]]
+            if actual[key] not in allowed:raise SystemExit("Unsupported system: "+key+" differs. No changes made.")
     if "uid=0" not in root("id"):raise SystemExit("Root access is required.")
     base=next((line[8:] for line in adb("shell","pm","path","--user","0","com.google.android.gms").splitlines() if line.endswith("/base.apk")),None)
     if not base:raise SystemExit("Google Play services is not installed.")
@@ -56,8 +58,9 @@ def main():
         raise SystemExit("APK variant or checksum does not match its metadata. No changes made.")
     if a.variant=="pixel-android17":
         minimum_code=[0,12,14][known.index(actual["gms_apk_sha256"])]
+        if actual["build"]=="CP4A.261105.040.A1":minimum_code=max(minimum_code,15)
         if int(meta.get("code",0))<minimum_code:
-            raise SystemExit("This GMS APK requires a newer Pixel bridge release. No changes made.")
+            raise SystemExit("This system/GMS combination requires a newer Pixel bridge release. No changes made.")
     if not meta.get("signer_certificate_sha256"):raise SystemExit("Unsigned builds cannot be installed.")
     print(adb("install","--no-incremental","-r","--user","0",a.apk))
     package="io.github.lichen.locationbridge"
